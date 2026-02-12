@@ -33,6 +33,7 @@
               nixos-rebuild = "${getExe final.nixos-rebuild}";
               openssh = "${getExe final.openssh} -p ${port} -t ${target_host}";
               lolcat_cmd = "${getExe final.lolcat} -p 3 -F 0.02";
+              figlet = "${getExe final.figlet}";
               sem = "${getExe' final.parallel "sem"} --will-cite --line-buffer";
               parameters = flake.nixosConfigurations.${machine}._module.args.nixinate;
               hermetic = parameters.hermetic or true;
@@ -54,7 +55,7 @@
                   echo "SSH Target: ${user}@${host}" | ${lolcat_cmd}
                   echo ${if port != 22 then "SSH Port: ${port}" else ""} | ${lolcat_cmd} 
                   echo "Rebuild Command:"
-                  echo "${where} build : mode $sw  ${if hermetic then "hermetic active" else ""}" | figlet | ${lolcat_cmd}
+                  echo "${where} build : mode $sw  ${if hermetic then "hermetic active" else ""}" | ${figlet} | ${lolcat_cmd}
                 '';
 
                 remoteCopy = if remote then ''
